@@ -20,6 +20,8 @@
 #include <tsk.h>
 #include <gbl.h>
 //#include "clkcfg.h"
+#include <stdint.h>
+#include <mbx.h>
 
 #include "hellocfg.h"
 #include "ezdsp5502.h"
@@ -27,6 +29,8 @@
 #include "aic3204.h"
 #include "ezdsp5502_mcbsp.h"
 #include "csl_mcbsp.h"
+
+extern MBX_Obj MBX_TSK_pam_tx_input;
 
 extern void audioProcessingInit(void);
 
@@ -44,8 +48,8 @@ void main(void)
     EZDSP5502_MCBSP_init();
 
     /* enable the interrupt with BIOS call */
-    C55_enableInt(7); // reference technical manual, I2S2 tx interrupt
-    C55_enableInt(6); // reference technical manual, I2S2 rx interrupt
+    // C55_enableInt(7); // reference technical manual, I2S2 tx interrupt
+    // C55_enableInt(6); // reference technical manual, I2S2 rx interrupt
 
     //audioProcessingInit();
 
@@ -54,24 +58,12 @@ void main(void)
 
 Void taskFxn(Arg value_arg)
 {
-    LgUns prevHtime, currHtime;
-    uint32_t delta;
-    float ncycles;
-
-    /* get cpu cycles per htime count */
-    ncycles = CLK_cpuCyclesPerHtime();
-
+    // enter pseudo main
+	int16_t x;
     while(1)
     {
-        TSK_sleep(1);
-        LOG_printf(&trace, "task running! Time is: %d ticks", (Int)TSK_time());
-
-        prevHtime = currHtime;
-        currHtime = CLK_gethtime();
-
-        delta = (currHtime - prevHtime) * ncycles;
-        LOG_printf(&trace, "CPU cycles = 0x%x %x", (uint16_t)(delta >> 16), (uint16_t)(delta));
-
+    	x = 0x01;
+    	MBX_post(&MBX_TSK_pam_tx_input, &x, ~0);
     }
 }
 
