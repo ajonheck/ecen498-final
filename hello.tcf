@@ -86,6 +86,8 @@ task.fxn      = prog.decl("taskFxn");
 task.arg0     = 10;
 
 
+bios.HWI.instance("HWI_INT6").useDispatcher = 0;
+bios.HWI.instance("HWI_INT7").useDispatcher = 0;
 // !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
 
 if (config.hasReportedError == false) {
