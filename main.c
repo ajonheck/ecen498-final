@@ -62,7 +62,7 @@ Void taskFxn(Arg value_arg)
 	int16_t x;
     while(1)
     {
-    	x = 0x01;
+    	x = counter;
     	MBX_post(&MBX_TSK_pam_tx_input, &x, ~0);
     }
 }
