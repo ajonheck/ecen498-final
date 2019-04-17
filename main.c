@@ -38,7 +38,7 @@ void main(void)
     EZDSP5502_init( );
 
     // configure the Codec chip
-    ConfigureAic3204();
+    // ConfigureAic3204();
 
     /* Initialize I2S */
     EZDSP5502_MCBSP_init();
