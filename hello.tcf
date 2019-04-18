@@ -92,6 +92,12 @@ bios.MBX.create("MBX_TSK_pam_tx_input");
 bios.TSK.create("TSK_pam_tx");
 bios.TSK.instance("TSK_pam_tx").order = 1;
 bios.TSK.instance("TSK_pam_tx").fxn = prog.extern("tsk_pam_tx");
+bios.TSK.create("TSK_pam_rx");
+bios.TSK.instance("TSK_pam_rx").order = 2;
+bios.TSK.instance("TSK_pam_rx").fxn = prog.extern("tsk_pam_rx");
+bios.MBX.create("MBX_TSK_pam_rx_input");
+bios.MBX.instance("MBX_TSK_pam_rx_input").messageSize = 256;
+bios.MBX.instance("MBX_TSK_pam_rx_input").length = 1;
 // !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
 
 if (config.hasReportedError == false) {
