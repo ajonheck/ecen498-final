@@ -59,11 +59,11 @@ void main(void)
 Void taskFxn(Arg value_arg)
 {
     // enter pseudo main
-	int16_t x;
+	int16_t x = 0x51CD;
     while(1)
     {
-    	x = counter;
     	MBX_post(&MBX_TSK_pam_tx_input, &x, ~0);
+    	x ++;
     }
 }
 
