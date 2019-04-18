@@ -12,9 +12,9 @@
 
 #define BITS_PER_INT16 16
 #define SPB 16
-#define LEN_INT16_FRAME ( BITS_PER_INT16 * SPB )
+#define LEN_CHANNEL_FRAME ( BITS_PER_INT16 * SPB )
 #define LEN_H 129
-#define LEN_DL (LEN_INT16_FRAME - 1 + LEN_H)
+#define LEN_DL (LEN_CHANNEL_FRAME - 1 + LEN_H)
 
 extern int16_t rrc_h[LEN_H];
 
