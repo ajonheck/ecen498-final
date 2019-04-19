@@ -30,7 +30,8 @@
 #include "ezdsp5502_mcbsp.h"
 #include "csl_mcbsp.h"
 
-extern MBX_Obj MBX_TSK_pam_tx_input;
+extern MBX_Obj MBX_TSK_pam_symbol_in;
+extern MBX_Obj MBX_TSK_pam_symbol_out;
 
 extern void audioProcessingInit(void);
 
@@ -59,11 +60,16 @@ void main(void)
 Void taskFxn(Arg value_arg)
 {
     // enter pseudo main
-	int16_t x = 0x51CD;
+	int16_t out;
+	int16_t x = 1;
     while(1)
     {
-    	MBX_post(&MBX_TSK_pam_tx_input, &x, ~0);
-    	x ++;
+    	MBX_post(&MBX_TSK_pam_symbol_in, &x, ~0);
+		if(MBX_pend(&MBX_TSK_pam_symbol_out, &out, 0) == TRUE && out != x-3)
+		{
+			out = 0;
+		}
+    	x++;
     }
 }
 
