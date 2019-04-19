@@ -17,5 +17,6 @@
 #define LEN_DL (LEN_CHANNEL_FRAME - 1 + LEN_H)
 
 extern int16_t rrc_h[LEN_H];
+extern int16_t channel_h[LEN_H];
 
 #endif /* TSK_PAM_H_ */

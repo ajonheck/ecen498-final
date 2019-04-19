@@ -99,6 +99,14 @@ bios.MBX.instance("MBX_TSK_pam_rx_input").messageSize = 256;
 bios.MBX.instance("MBX_TSK_pam_rx_input").length = 1;
 bios.MBX.create("MBX_TSK_pam_symbol_in");
 bios.MBX.create("MBX_TSK_pam_symbol_out");
+bios.MBX.create("MBX_TSK_pam_channel_input");
+bios.MBX.create("MBX_TSK_pam_channel_output");
+bios.MBX.instance("MBX_TSK_pam_rx_input").destroy();
+bios.MBX.instance("MBX_TSK_pam_channel_input").messageSize = 256;
+bios.MBX.instance("MBX_TSK_pam_channel_output").messageSize = 256;
+bios.TSK.create("TSK_pam_channel");
+bios.TSK.instance("TSK_pam_channel").order = 3;
+bios.TSK.instance("TSK_pam_channel").fxn = prog.extern("tsk_pam_channel");
 // !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
 
 if (config.hasReportedError == false) {

@@ -62,12 +62,28 @@ Void taskFxn(Arg value_arg)
     // enter pseudo main
 	int16_t out;
 	int16_t x = 1;
+	int40_t sent = 0;
+	int40_t err = 0;
+	double ber = 0;
     while(1)
     {
     	MBX_post(&MBX_TSK_pam_symbol_in, &x, ~0);
-		if(MBX_pend(&MBX_TSK_pam_symbol_out, &out, 0) == TRUE && out != x-3)
+    	sent ++;
+    	// account for delay through system
+    	int16_t expected = x - 3;
+    	// If there was an error, check how many bits are in error
+		if(MBX_pend(&MBX_TSK_pam_symbol_out, &out, 0) == TRUE && out != expected)
 		{
-			out = 0;
+			int i;
+			for(i = 0; i < 16; i ++)
+			{
+				int16_t msk = 0x01 << i;
+				if( ( (expected) & msk) != (out & msk) )
+				{
+					err ++;
+				}
+			}
+			ber = ( (double) err / (double) sent ) / 16;
 		}
     	x++;
     }
