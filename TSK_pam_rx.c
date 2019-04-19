@@ -11,7 +11,7 @@
 #include "fir.h"
 #include "TSK_pam.h"
 
-extern MBX_Obj MBX_TSK_pam_tx_input;
+extern MBX_Obj MBX_TSK_pam_channel_output;
 extern MBX_Obj MBX_TSK_pam_symbol_out;
 
 extern int16_t rrc_h[LEN_H];
@@ -27,7 +27,7 @@ tsk_pam_rx()
 	// seed the decision index to higher value to avoid filter delay producing garbage values
 	int16_t decision_index = ( ( LEN_H - 1 ) / 2 );
 	// wait for first frame to avoid control flow
-	MBX_pend(&MBX_TSK_pam_rx_input, &rx, ~0);
+	MBX_pend(&MBX_TSK_pam_channel_output, &rx, ~0);
 	// apply match filter
 	fir_filter(rx, LEN_CHANNEL_FRAME, rrc_h, LEN_H, y, dl);
 
@@ -48,7 +48,7 @@ tsk_pam_rx()
 		{
 			decision_index = 0;
 			// wait for an rx frame
-			MBX_pend(&MBX_TSK_pam_rx_input, &rx, ~0);
+			MBX_pend(&MBX_TSK_pam_channel_output, &rx, ~0);
 
 			// apply match filter
 			fir_filter(rx, LEN_CHANNEL_FRAME, rrc_h, LEN_H, y, dl);

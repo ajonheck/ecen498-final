@@ -13,7 +13,7 @@
 
 #define BIT_TO_PULSE(num, pos) ( ( (num) & ( 0x01 << (pos) ) ) ? 32767 : -32768 )
 
-extern MBX_Obj MBX_TSK_pam_rx_input;
+extern MBX_Obj MBX_TSK_pam_channel_input;
 extern MBX_Obj MBX_TSK_pam_symbol_in;
 extern int16_t rrc_h[LEN_H];
 
@@ -41,7 +41,7 @@ tsk_pam_tx()
 
 		// Shape data
 		fir_filter(pulse_arr, LEN_CHANNEL_FRAME, rrc_h, LEN_H, shaped_data, dl);
-    	MBX_post(&MBX_TSK_pam_rx_input, &shaped_data, ~0);
+    	MBX_post(&MBX_TSK_pam_channel_input, &shaped_data, ~0);
 	}
 }
 
