@@ -52,6 +52,8 @@ void main(void)
     // C55_enableInt(7); // reference technical manual, I2S2 tx interrupt
     // C55_enableInt(6); // reference technical manual, I2S2 rx interrupt
 
+    IDL_IO_setup();
+
     //audioProcessingInit();
 
     // after main() exits the DSP/BIOS scheduler starts
@@ -68,9 +70,10 @@ Void taskFxn(Arg value_arg)
     while(1)
     {
     	MBX_post(&MBX_TSK_pam_symbol_in, &x, ~0);
+    	x++;
     	sent ++;
     	// account for delay through system
-    	int16_t expected = x - 3;
+    	int16_t expected = x - 4;
     	// If there was an error, check how many bits are in error
 		if(MBX_pend(&MBX_TSK_pam_symbol_out, &out, 0) == TRUE && out != expected)
 		{
@@ -85,7 +88,6 @@ Void taskFxn(Arg value_arg)
 			}
 			ber = ( (double) err / (double) sent ) / 16;
 		}
-    	x++;
     }
 }
 

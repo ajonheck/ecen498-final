@@ -18,6 +18,9 @@
 
 extern MBX_Obj MBX_TSK_pam_channel_input;
 extern MBX_Obj MBX_TSK_pam_channel_output;
+extern MBX_Obj MBX_TSK_pam_channel_noise_up;
+extern MBX_Obj MBX_TSK_pam_channel_noise_down;
+
 
 int16_t frame[LEN_CHANNEL_FRAME];
 int16_t i;
@@ -26,14 +29,23 @@ double gaussrand();
 
 tsk_pam_channel()
 {
-	double sigma = 0.70711;
+	double sigma = 0.44615;
 	int40_t count = 0;
 	double cumulative = 0;
 	double mean = 0;
 	double sig_sum = 0;
 	double exp_sigma = 0;
+	int16_t button;
 	while(1)
 	{
+		if(MBX_pend(&MBX_TSK_pam_channel_noise_up, &button, 0) == TRUE)
+		{
+			sigma *= 1.5;
+		}
+		else if(MBX_pend(&MBX_TSK_pam_channel_noise_down, &button, 0) == TRUE)
+		{
+			sigma /= 1.5;
+		}
 		MBX_pend(&MBX_TSK_pam_channel_input, &frame, ~0);
 		for(i = 0; i < LEN_CHANNEL_FRAME; i++)
 		{

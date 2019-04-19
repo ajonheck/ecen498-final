@@ -107,6 +107,17 @@ bios.MBX.instance("MBX_TSK_pam_channel_output").messageSize = 256;
 bios.TSK.create("TSK_pam_channel");
 bios.TSK.instance("TSK_pam_channel").order = 3;
 bios.TSK.instance("TSK_pam_channel").fxn = prog.extern("tsk_pam_channel");
+bios.MBX.create("MBX_TSK_pam_channel_noise_up");
+bios.MBX.create("MBX_TSK_pam_channel_noise_down");
+bios.TSK.create("TSK_poll_switches");
+bios.TSK.instance("TSK_poll_switches").order = 4;
+bios.TSK.instance("TSK_poll_switches").fxn = prog.extern("tsk_poll_switches");
+bios.SWI.instance("PRD_swi").order = 1;
+bios.PRD.create("PRD_IO_poll_switches");
+bios.PRD.instance("PRD_IO_poll_switches").order = 1;
+bios.PRD.instance("PRD_IO_poll_switches").period = 1000;
+bios.PRD.instance("PRD_IO_poll_switches").period = 200;
+bios.PRD.instance("PRD_IO_poll_switches").fxn = prog.extern("tsk_poll_switches");
 // !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
 
 if (config.hasReportedError == false) {
