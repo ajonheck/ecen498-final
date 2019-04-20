@@ -1,9 +1,11 @@
 /*
- * IDL_poll_switches.c
+ * PRD_IO.c
  *
  *  Created on: Mar 6, 2019
  *      Author: Andy
  */
+#include "PRD_IO.h"
+
 #include <std.h>
 #include "ezdsp5502.h"
 #include "ezdsp5502_i2cgpio.h"
@@ -12,7 +14,6 @@
 #include "stdint.h"
 #include <mbx.h>
 #include "hellocfg.h"
-#include "IDL_IO.h"
 
 #define SW_INC (SW1)
 #define SW_DEC (SW0)
@@ -24,13 +25,13 @@ int16_t increment_switch = LOW;
 int16_t decrement_switch = LOW;
 int16_t reading;
 
-void IDL_IO_setup()
+void PRD_IO_setup()
 {
     EZDSP5502_I2CGPIO_configLine( SW_INC, IN );
     EZDSP5502_I2CGPIO_configLine( SW_DEC, IN );
 }
 
-void tsk_poll_switches()
+void prd_poll_switches()
 {
 	// get filter switch reading and determine if a press event occured
 	reading = EZDSP5502_I2CGPIO_readLine(SW_INC);
