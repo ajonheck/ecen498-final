@@ -30,12 +30,8 @@ double gaussrand();
 tsk_pam_channel()
 {
 	double sigma = 0.44615;
-	int40_t count = 0;
-	double cumulative = 0;
-	double mean = 0;
-	double sig_sum = 0;
-	double exp_sigma = 0;
 	int16_t button;
+	int32_t noise, channel_data;
 	while(1)
 	{
 		if(MBX_pend(&MBX_TSK_pam_channel_noise_up, &button, 0) == TRUE)
@@ -49,11 +45,10 @@ tsk_pam_channel()
 		MBX_pend(&MBX_TSK_pam_channel_input, &frame, ~0);
 		for(i = 0; i < LEN_CHANNEL_FRAME; i++)
 		{
-			count ++;
-
-			// generate noise bounded between +/- 1
-			int32_t noise = gaussrand() * sigma * 32767.0;
-			int32_t channel_data = noise + frame[i];
+			// generate noise bounded between +/- 1 and convert to Q15
+			noise = gaussrand() * sigma * 32767.0;
+			// Add noise to data
+			channel_data = noise + frame[i];
 			if(channel_data > 32767)
 			{
 				channel_data = 32767;
@@ -63,10 +58,6 @@ tsk_pam_channel()
 				channel_data = -32768;
 			}
 			frame[i] = (int16_t) channel_data;
-			cumulative += noise;
-			sig_sum += noise * noise;
-			mean = cumulative / count;
-			exp_sigma = sqrt(sig_sum / (count -  1));
 		}
 		MBX_post(&MBX_TSK_pam_channel_output, &frame, ~0);
 	}
