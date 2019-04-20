@@ -131,6 +131,7 @@ bios.TSK.instance("TSK_pam_channel").order = 5;
 bios.TSK.instance("TSK_disp").order = 6;
 bios.TSK.instance("TSK_poll_switches").destroy();
 bios.PRD.instance("PRD_IO_poll_switches").period = 100;
+bios.PRD.instance("PRD_IO_poll_switches").destroy();
 // !GRAPHICAL_CONFIG_TOOL_SCRIPT_INSERT_POINT!
 
 if (config.hasReportedError == false) {

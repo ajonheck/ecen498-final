@@ -32,6 +32,7 @@
 
 extern MBX_Obj MBX_TSK_pam_symbol_in;
 extern MBX_Obj MBX_TSK_pam_symbol_out;
+extern MBX_Obj MBX_TSK_disp_in;
 
 extern void audioProcessingInit(void);
 
@@ -72,8 +73,10 @@ Void taskFxn(Arg value_arg)
     	MBX_post(&MBX_TSK_pam_symbol_in, &x, ~0);
     	x++;
     	sent ++;
+
     	// account for delay through system
     	int16_t expected = x - 4;
+
     	// If there was an error, check how many bits are in error
 		if(MBX_pend(&MBX_TSK_pam_symbol_out, &out, 0) == TRUE && out != expected)
 		{
@@ -88,6 +91,9 @@ Void taskFxn(Arg value_arg)
 			}
 			ber = ( (double) err / (double) sent ) / 16;
 		}
+
+		// push to display
+		MBX_post(&MBX_TSK_disp_in, &out, ~0);
     }
 }
 
