@@ -31,7 +31,7 @@ void PRD_IO_setup()
     EZDSP5502_I2CGPIO_configLine( SW_DEC, IN );
 }
 
-void prd_poll_switches()
+void PRD_poll_switches()
 {
 	// get filter switch reading and determine if a press event occured
 	reading = EZDSP5502_I2CGPIO_readLine(SW_INC);

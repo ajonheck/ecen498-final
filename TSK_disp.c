@@ -11,7 +11,7 @@
 #include <mbx.h>
 #include "lcd.h"
 
-#define WRITE_LEN (4 + 1)
+#define WRITE_LEN (192 + 1)
 #define LEN_DL_DISP (96+1)
 
 extern MBX_Obj MBX_TSK_disp_in;

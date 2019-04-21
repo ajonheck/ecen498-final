@@ -27,18 +27,20 @@ int16_t i;
 
 double gaussrand();
 
+double sigma = 0.4;
+int16_t button;
+
 tsk_pam_channel()
 {
-	double sigma = 0.5;
 	while(1)
 	{
 		if(MBX_pend(&MBX_TSK_pam_channel_noise_up, &button, 0) == TRUE)
 		{
-			sigma *= 1.5;
+			sigma *= 1.122;
 		}
 		else if(MBX_pend(&MBX_TSK_pam_channel_noise_down, &button, 0) == TRUE)
 		{
-			sigma /= 1.5;
+			sigma /= 1.122;
 		}
 		MBX_pend(&MBX_TSK_pam_channel_input, &frame, ~0);
 		for(i = 0; i < LEN_CHANNEL_FRAME; i++)

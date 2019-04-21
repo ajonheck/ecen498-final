@@ -97,6 +97,9 @@ Void taskFxn(Arg value_arg)
 
 		// push to display
 		MBX_post(&MBX_TSK_disp_in, &disp_val, ~0);
+
+		// Check switches
+		PRD_poll_switches();
     }
 }
 

@@ -12,4 +12,6 @@
 
 void PRD_IO_setup();
 
+void PRD_poll_switches();
+
 #endif /* PRD_IO_H_ */
