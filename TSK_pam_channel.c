@@ -29,9 +29,7 @@ double gaussrand();
 
 tsk_pam_channel()
 {
-	double sigma = 0.44615;
-	int16_t button;
-	int32_t noise, channel_data;
+	double sigma = 0.5;
 	while(1)
 	{
 		if(MBX_pend(&MBX_TSK_pam_channel_noise_up, &button, 0) == TRUE)
@@ -45,10 +43,9 @@ tsk_pam_channel()
 		MBX_pend(&MBX_TSK_pam_channel_input, &frame, ~0);
 		for(i = 0; i < LEN_CHANNEL_FRAME; i++)
 		{
-			// generate noise bounded between +/- 1 and convert to Q15
-			noise = gaussrand() * sigma * 32767.0;
-			// Add noise to data
-			channel_data = noise + frame[i];
+			// generate noise bounded between +/- 1
+			int32_t noise = gaussrand() * sigma * 32767.0;
+			int32_t channel_data = noise + frame[i];
 			if(channel_data > 32767)
 			{
 				channel_data = 32767;
